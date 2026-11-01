@@ -1,23 +1,35 @@
 <!doctype html>
 <!--
-  Web de presentación de Rumbo.
+  Web de presentación de Rumbo (https://rumbo.sernuu.com/).
+
+  La app de verdad está en la carpeta app/ (https://rumbo.sernuu.com/app/),
+  que se genera con "npm run build:web". Esta página solo la presenta.
+
+  IMPORTANTE: esta web no carga nada de otras webs (ni Google Fonts, ni
+  analítica, ni scripts de afiliados). Por eso no usa cookies de terceros
+  y no necesita banner de cookies. Si algún día añades algo de fuera,
+  revisa cookies.html y piensa si hace falta pedir permiso antes.
 -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rumbo · Planifica tu viaje día a día</title>
-<meta name="description" content="Rumbo te monta el plan de tu viaje día a día: qué ver, dónde comer barato, cómo moverte, qué documentos necesitas y qué reservar. Y cada país que visitas se ilumina en tu pasaporte.">
+<meta name="description" content="Rumbo te monta el plan de tu viaje día a día: qué ver, dónde y a qué hora comer, cómo moverte, qué documentos necesitas y qué reservar. Y cada país que visitas se ilumina en tu pasaporte.">
+<!-- La dirección "oficial" de la página (para Google y para compartir) -->
+<link rel="canonical" href="https://rumbo.sernuu.com/">
 <!-- Vista previa al compartir el enlace (WhatsApp, redes...) -->
 <meta property="og:title" content="Rumbo · Planifica tu viaje día a día">
-<meta property="og:description" content="Tu plan de viaje día a día y un pasaporte que se ilumina con cada país.">
+<meta property="og:description" content="Tu plan de viaje día a día y un pasaporte que se ilumina con cada país. Gratis, en el navegador.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://rumbo.sernuu.com/">
+<!-- Imagen de la vista previa: el icono de la app (está dentro de app/ al publicarla) -->
+<meta property="og:image" content="https://rumbo.sernuu.com/app/icon-512.png">
 <meta name="theme-color" content="#07070B">
 <!-- Icono de la pestaña: la flecha de Rumbo dibujada en SVG (sin archivos aparte) -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23FF7A18'/%3E%3Cstop offset='1' stop-color='%23FF2E93'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Cpath d='M46 18 18 30l12 4 4 12z' fill='white'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<!-- La letra se sirve desde esta misma web (no desde Google): ver fonts/space-grotesk.css -->
+<link rel="stylesheet" href="fonts/space-grotesk.css">
 <style>
   /* Los mismos colores que la app (src/theme/theme.js) */
   :root {
@@ -42,8 +54,12 @@
   .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700; letter-spacing: 3px; }
   .logo { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, var(--orange), var(--pink)); display: grid; place-items: center; }
   .logo svg { width: 18px; height: 18px; }
+  nav { display: flex; align-items: center; }
   nav a { color: var(--dim); text-decoration: none; margin-left: 22px; font-size: 15px; }
   nav a:hover { color: var(--text); }
+  /* Botón pequeño "Abrir app" de la cabecera */
+  nav a.open { color: var(--bg); background: var(--neon); font-weight: 700; padding: 8px 14px; border-radius: 12px; }
+  nav a.open:hover { color: var(--bg); }
 
   /* ---------- Portada ---------- */
   .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; padding: 72px 0 56px; }
@@ -55,7 +71,7 @@
   .btn { display: inline-flex; align-items: center; gap: 8px; height: 52px; padding: 0 22px; border-radius: 16px; font-weight: 700; text-decoration: none; }
   .btn.primary { background: linear-gradient(135deg, var(--orange), var(--pink)); color: #fff; }
   .btn.ghost { border: 1px solid var(--border); color: var(--text); }
-  .soon { color: var(--mute); font-size: 14px; }
+  .soon { color: var(--mute); font-size: 14px; margin-top: 14px; }
 
   /* Móvil dibujado con CSS que imita la pantalla del plan */
   .phone { justify-self: center; width: 300px; border-radius: 42px; padding: 12px; background: #1c1c26; border: 1px solid #2c2c3a; box-shadow: 0 30px 80px rgba(255,46,147,.18), 0 0 0 1px rgba(255,255,255,.03) inset; }
@@ -96,6 +112,7 @@
 
   .free { text-align: center; }
   .free p { color: var(--dim); max-width: 38em; margin: 0 auto 24px; }
+  .free .cta { justify-content: center; }
 
   footer { border-top: 1px solid var(--border); padding: 28px 0 40px; color: var(--mute); font-size: 14px; }
   footer .wrap { display: flex; flex-wrap: wrap; gap: 14px 28px; justify-content: space-between; }
@@ -109,15 +126,6 @@
     nav a:not(.keep) { display: none; }
   }
 </style>
-<script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1" data-cmp-ab="2">
-  (function () {
-      var script = document.createElement("script");
-      script.async = 1;
-      script.setAttribute("data-cmp-ab","2");
-      script.src = 'https://emrldco.com/NTgwNjI5.js?t=580629';
-      document.head.appendChild(script);
-  })();
-</script>
 </head>
 <body>
 
@@ -130,7 +138,9 @@
     <nav>
       <a href="#funciones">Funciones</a>
       <a href="#pasaporte">Pasaporte</a>
-      <a class="keep" href="privacidad.html">Privacidad</a>
+      <a href="privacidad.html">Privacidad</a>
+      <!-- "keep": este enlace se sigue viendo en el móvil -->
+      <a class="keep open" href="app/">Abrir app</a>
     </nav>
   </div>
 </header>
@@ -141,11 +151,13 @@
     <div>
       <div class="eyebrow">App de viajes · gratis</div>
       <h1>Tu viaje, <span class="grad">día a día</span>.<br>Tu mundo, encendido.</h1>
-      <p class="lead">Busca una ciudad, elige qué quieres ver y Rumbo te monta el plan: rutas, dónde comer rápido y barato, cómo moverte, qué reservar y qué documentos llevar. Al volver, el país se ilumina en tu pasaporte.</p>
+      <p class="lead">Busca una ciudad, elige qué quieres ver y Rumbo te monta el plan: rutas, dónde y a qué hora comer, cómo moverte, qué reservar y qué documentos llevar. Al volver, el país se ilumina en tu pasaporte.</p>
       <div class="cta">
-        <a class="btn primary" href="#funciones">Ver qué hace</a>
-        <span class="soon">Próximamente en Google Play y App Store</span>
+        <!-- La app web: la misma app que en el móvil, pero en el navegador -->
+        <a class="btn primary" href="app/">Abrir Rumbo</a>
+        <a class="btn ghost" href="#funciones">Ver qué hace</a>
       </div>
+      <p class="soon">Funciona en el navegador del móvil y del ordenador, sin instalar nada. En el móvil puedes añadirla a la pantalla de inicio. Próximamente en Google Play.</p>
     </div>
 
     <!-- Captura "dibujada" del plan -->
@@ -155,12 +167,12 @@
         <div class="s-title">Roma</div>
         <div class="s-sub">vie 2 oct → dom 4 oct · 15 sitios</div>
         <div class="seg"><span class="on">Andando</span><span>Transporte</span><span>Coche</span></div>
-        <div class="item"><div class="num">1</div><div class="card"><b>Coliseo</b><small>Historia · 13:07–14:07</small><br><span class="tag">Reserva ya</span></div></div>
+        <div class="item"><div class="num">1</div><div class="card"><b>Coliseo</b><small>Historia · 10:30–11:30</small><br><span class="tag">Reserva ya</span></div></div>
         <div class="leg">8 min andando · 630 m</div>
-        <div class="item"><div class="num">2</div><div class="card"><b>Foro Romano</b><small>Historia · 14:15–15:15</small></div></div>
-        <div class="food"><b>Hora de comer</b><br>Pizza al corte · a 280 m · rápido · €</div>
+        <div class="item"><div class="num">2</div><div class="card"><b>Foro Romano</b><small>Historia · 11:40–12:50</small></div></div>
+        <div class="food"><b>Hora de comer · 13:00</b><br>Pizza al corte · a 280 m · abierto</div>
         <div class="leg" style="margin-top:8px">12 min andando · 900 m</div>
-        <div class="item"><div class="num">3</div><div class="card"><b>Fontana di Trevi</b><small>Monumento · 16:00–16:30</small></div></div>
+        <div class="item"><div class="num">3</div><div class="card"><b>Fontana di Trevi</b><small>Monumento · 14:15–14:45</small></div></div>
       </div>
     </div>
   </div>
@@ -177,8 +189,8 @@
       </div>
       <div class="feat">
         <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 3v8a3 3 0 0 0 6 0V3M7 11v10M17 3c-2 2-3 5-3 8h3v10"/></svg></div>
-        <h3>Comer rápido y barato</h3>
-        <p>Cada día, sitios para comer cerca de tu ruta, sin perder la tarde buscando.</p>
+        <h3>Comer a la hora del país</h3>
+        <p>Comida y cena a la hora que se estila allí (en Londres se cena a las 18:30), con sitios abiertos cerca de tu ruta. Añade tus restaurantes y el plan los mete a su hora.</p>
       </div>
       <div class="feat">
         <div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M8 21l2-4M16 21l-2-4"/></svg></div>
@@ -222,7 +234,16 @@
 
   <section class="free">
     <h2>Gratis y sin anuncios</h2>
-    <p>Rumbo usa datos abiertos (OpenStreetMap, Wikidata, Open-Meteo...). Algunos enlaces de entradas, alojamiento, eSIM o seguros son de afiliado: si compras a través de ellos, Rumbo recibe una pequeña comisión sin que a ti te cueste más. Así la app sigue siendo gratis.</p>
+    <p>Rumbo usa datos abiertos (OpenStreetMap, Wikidata, Open-Meteo...). No tiene anuncios, no te rastrea y no hace falta cuenta para usarla: tus viajes se guardan en tu propio dispositivo.</p>
+    <div class="cta">
+      <a class="btn primary" href="app/">Abrir Rumbo</a>
+      <!--
+        Botón de donaciones: cuando tengas tu página de Ko-fi o PayPal.me,
+        quita los símbolos de comentario de la línea de abajo y pon tu enlace.
+        rel="noopener" -> la web de donaciones no puede tocar esta pestaña.
+      -->
+      <!-- <a class="btn ghost" href="https://ko-fi.com/TU_NOMBRE" rel="noopener">☕ Invítame a un café</a> -->
+    </div>
   </section>
 </main>
 
