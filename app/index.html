@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+  Plantilla HTML de la versión web de Rumbo (la usa "npx expo export -p web").
+
+  POR QUÉ LA TENEMOS: la que trae Expo no tiene icono, color de tema ni
+  "manifest". Con esto, en el móvil se puede "Añadir a pantalla de inicio"
+  y Rumbo se abre como una app, con su icono y sin la barra del navegador.
+  Todo lo que está en la carpeta public/ se copia tal cual junto a la web,
+  por eso los enlaces de aquí son relativos (manifest.json, favicon.png...).
+
+  No cargamos nada de fuera (ni Google Fonts ni analítica): así la web no
+  usa cookies de terceros y no necesita banner de cookies.
+-->
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover" />
+    <title>Rumbo · Planea tu viaje día a día</title>
+    <meta name="description" content="App de viajes gratis: elige qué ver y Rumbo te monta el plan por días, con dónde comer, cómo moverte y tu pasaporte de países." />
+    <meta name="theme-color" content="#07070B" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Rumbo" />
+    <style id="expo-reset">
+      /* Lo mínimo para que la app ocupe toda la pantalla (igual que la plantilla de Expo). */
+      html, body { height: 100%; background: #07070B; }
+      body { overflow: hidden; margin: 0; }
+      #root { display: flex; height: 100%; flex: 1; }
+    </style>
+  </head>
+  <body>
+    <noscript>Rumbo necesita JavaScript activado para funcionar.</noscript>
+    <div id="root"></div>
+  <script src="/app/_expo/static/js/web/AppEntry-7ec2cb56118a816519b7814b30722c04.js" defer></script>
+</body>
+</html>

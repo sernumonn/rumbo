@@ -1,13 +1,11 @@
 <!doctype html>
 <!--
-  Política de privacidad de Rumbo.
+  Política de privacidad de Rumbo (web y app).
 
-  POR QUÉ HACE FALTA: Google Play y App Store la exigen para publicar la app,
-  y los programas de afiliados suelen mirarla. Describe lo que la app hace
-  DE VERDAD con los datos (si la app cambia, hay que actualizarla).
-
-  ANTES DE PUBLICAR: busca "CAMBIA ESTO" (tu nombre y tu email).
-  Es un texto orientativo, no asesoramiento legal.
+  Tiene que describir lo que la app hace DE VERDAD: si Rumbo empieza a
+  recoger datos nuevos o a usar otro servicio, actualiza esta página, la
+  versión de dentro de la app (src/data/legal.js) y la fecha.
+  Texto orientativo, no es asesoramiento legal.
 -->
 <html lang="es">
 <head>
@@ -16,9 +14,8 @@
 <title>Privacidad · Rumbo</title>
 <meta name="description" content="Política de privacidad de la app Rumbo.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23FF7A18'/%3E%3Cstop offset='1' stop-color='%23FF2E93'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Cpath d='M46 18 18 30l12 4 4 12z' fill='white'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<!-- La letra se sirve desde esta misma web (no desde Google): ver fonts/space-grotesk.css -->
+<link rel="stylesheet" href="fonts/space-grotesk.css">
 <style>
   :root { --bg: #07070B; --surface: #111118; --border: #262633; --text: #F4F4F8; --dim: #A0A0B4; --mute: #62627A; --neon: #39FF14; --orange: #FF7A18; --pink: #FF2E93; }
   * { box-sizing: border-box; }
@@ -40,6 +37,7 @@
   a { color: var(--neon); }
   .box { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 18px 20px; }
   footer { border-top: 1px solid var(--border); padding: 24px 0 40px; color: var(--mute); font-size: 14px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 10px 24px; justify-content: space-between; }
   footer a { color: var(--dim); }
 </style>
 </head>
@@ -55,18 +53,17 @@
 
 <main class="wrap">
   <h1>Política de privacidad</h1>
-  <p class="date">Última actualización: 2 de octubre de 2026</p>
+  <p class="date">Última actualización: 1 de noviembre de 2026</p>
 
   <div class="box">
-    <p style="margin:0"><strong>En resumen:</strong> sin cuenta, todo se queda en tu móvil. Si creas una cuenta, guardamos tus viajes para que no los pierdas y para que puedas planear con amigos. No usamos tu ubicación, no mostramos publicidad y no vendemos tus datos.</p>
+    <p style="margin:0"><strong>En resumen:</strong> sin cuenta, todo se queda en tu dispositivo. Si creas una cuenta, guardamos tus viajes para que no los pierdas y para que puedas planear con amigos. No usamos tu ubicación, no mostramos publicidad, no te rastreamos y no vendemos tus datos.</p>
   </div>
 
   <h2>Quién es el responsable</h2>
-  <!-- CAMBIA ESTO: tu nombre y tu email de contacto -->
-  <p>Rumbo es una app desarrollada por <strong>TU NOMBRE</strong>. Para cualquier cuestión sobre tus datos, escribe a <a href="mailto:TU-EMAIL@ejemplo.com">TU-EMAIL@ejemplo.com</a>.</p>
+  <p>Rumbo es una app desarrollada por <strong>sernuu</strong> (ver el <a href="aviso-legal.html">aviso legal</a>). Para cualquier cuestión sobre tus datos, escribe a <a href="mailto:mysticnebulosa06@gmail.com">mysticnebulosa06@gmail.com</a>.</p>
 
   <h2>Qué datos usamos</h2>
-  <p><strong>Si usas Rumbo sin cuenta</strong>, tus viajes, sellos del pasaporte, color elegido, nacionalidad, lista de equipaje y lo descargado para usar sin conexión se guardan solo en tu dispositivo. No nos llega nada.</p>
+  <p><strong>Si usas Rumbo sin cuenta</strong>, tus viajes, sellos del pasaporte, color elegido, nacionalidad, horario de comidas, lista de equipaje y lo descargado para usar sin conexión se guardan solo en tu dispositivo: en el móvil, dentro de la app; en la versión web, en el almacenamiento local de tu navegador. No nos llega nada.</p>
   <p><strong>Si creas una cuenta</strong> (opcional), guardamos:</p>
   <ul>
     <li>Tu email y tu contraseña (cifrada), para que puedas iniciar sesión.</li>
@@ -75,7 +72,7 @@
     <li>Tus solicitudes de amistad y amigos.</li>
     <li>Los viajes en grupo en los que participas y los sitios que votas.</li>
   </ul>
-  <p>Tu nacionalidad solo se usa para decirte qué documentos necesitas para entrar en cada país.</p>
+  <p>Tu nacionalidad solo se usa para decirte qué documentos necesitas para entrar en cada país. Usamos estos datos para darte el servicio que pides al crear la cuenta (artículo 6.1.b del RGPD).</p>
 
   <h2>Qué ven otras personas</h2>
   <ul>
@@ -86,34 +83,37 @@
 
   <h2>Dónde se guardan</h2>
   <p>Los datos de las cuentas se guardan en <a href="https://supabase.com/privacy" rel="noopener">Supabase</a>, nuestro proveedor de base de datos. Las reglas de la base de datos impiden que un usuario lea o cambie los datos de otro.</p>
+  <p>La web y la versión web de la app están alojadas en <a href="https://docs.github.com/es/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">GitHub Pages</a>, que puede registrar datos técnicos de la conexión (como la IP) por seguridad.</p>
 
   <h2>Servicios externos que consulta la app</h2>
   <p>Para mostrarte información, la app pide datos a servicios públicos. Reciben la ciudad o zona que consultas y, como cualquier web, la dirección IP de tu conexión, pero nunca tu cuenta ni tus datos personales:</p>
   <ul>
     <li>Open-Meteo (ciudades, tiempo y zona horaria).</li>
     <li>Wikidata (monumentos, datos de cada país y aeropuertos).</li>
-    <li>OpenStreetMap: Overpass, Nominatim, Photon y las imágenes del mapa (restaurantes, paradas, tiendas, hoteles y el mapa).</li>
-    <li>Nager.Date (festivos), flagcdn (banderas) y jsDelivr / GitHub (tipos de cambio y requisitos de visado).</li>
+    <li>OpenStreetMap: Overpass, Nominatim, Photon y las imágenes del mapa (restaurantes y sus horarios, paradas, tiendas, hoteles y el mapa).</li>
+    <li>Nager.Date (festivos), flagcdn (banderas), unpkg (el programa del mapa) y jsDelivr / GitHub (tipos de cambio y requisitos de visado).</li>
     <li>Wikimedia Commons (fotos de los sitios).</li>
   </ul>
 
   <h2>Lo que no hacemos</h2>
   <ul>
     <li>No usamos tu ubicación GPS.</li>
-    <li>No mostramos publicidad ni usamos herramientas de seguimiento publicitario.</li>
+    <li>No mostramos publicidad ni usamos herramientas de analítica o de seguimiento.</li>
+    <li>No usamos cookies (ver la <a href="cookies.html">política de cookies</a>).</li>
     <li>No vendemos ni cedemos tus datos a nadie.</li>
   </ul>
 
-  <h2>Enlaces de afiliado</h2>
-  <p>Algunos botones (entradas, alojamiento, eSIM, seguros de viaje) llevan a webs de otras empresas con un enlace de afiliado: si compras, Rumbo recibe una comisión y a ti no te cuesta más. Al abrir esos enlaces sales de Rumbo y se aplica la política de privacidad de esa web, que puede usar cookies para saber que llegaste desde Rumbo.</p>
+  <h2>Donaciones</h2>
+  <p>Rumbo es gratis. Si decides hacer una donación voluntaria, el pago se hace en la web de la plataforma de donaciones (Ko-fi, PayPal...), con su propia política de privacidad. Rumbo no ve los datos de tu tarjeta ni de tu cuenta de pago.</p>
 
   <h2>Notificaciones</h2>
-  <p>Si las permites, la app programa en tu propio móvil recordatorios de tus viajes (la víspera y a la vuelta). No se envían desde ningún servidor.</p>
+  <p>Si las permites (solo en la app del móvil), la app programa en tu propio móvil recordatorios de tus viajes (la víspera y a la vuelta). No se envían desde ningún servidor.</p>
 
   <h2>Cuánto tiempo los guardamos y cómo borrarlos</h2>
   <ul>
-    <li>Los datos de tu dispositivo se borran al desinstalar la app.</li>
-    <li>Los datos de tu cuenta se guardan mientras la tengas. Puedes pedir que borremos tu cuenta y todos sus datos escribiendo al email de arriba; lo haremos en un máximo de 30 días.</li>
+    <li>Los datos de tu dispositivo se borran al desinstalar la app o, en la web, al borrar los datos del sitio en tu navegador.</li>
+    <li>Los datos de tu cuenta se guardan mientras la tengas. Puedes borrar tus datos de Rumbo tú mismo en <strong>Pasaporte → Tu cuenta → "Borrar mis datos de Rumbo"</strong>.</li>
+    <li>Para borrar la cuenta completa, escribe al email de arriba; lo haremos en un máximo de 30 días.</li>
   </ul>
 
   <h2>Tus derechos</h2>
@@ -127,7 +127,10 @@
 </main>
 
 <footer>
-  <div class="wrap"><a href="index.html">← Volver a Rumbo</a></div>
+  <div class="wrap">
+    <a href="index.html">← Volver a Rumbo</a>
+    <span><a href="cookies.html">Cookies</a> · <a href="aviso-legal.html">Aviso legal</a></span>
+  </div>
 </footer>
 </body>
 </html>
