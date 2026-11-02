@@ -7,7 +7,8 @@
 
   IMPORTANTE: esta web no carga nada de otras webs (ni Google Fonts, ni
   analítica, ni scripts de afiliados). Por eso no usa cookies de terceros
-  y no necesita banner de cookies. Si algún día añades algo de fuera,
+  y no necesita banner de cookies. (El formulario "¿Qué mejorarías?" solo
+  conecta con Web3Forms cuando alguien pulsa Enviar, y no pone cookies.) Si algún día añades algo de fuera,
   revisa cookies.html y piensa si hace falta pedir permiso antes.
 -->
 <html lang="es">
@@ -114,6 +115,22 @@
   .free p { color: var(--dim); max-width: 38em; margin: 0 auto 24px; }
   .free .cta { justify-content: center; }
 
+  /* ---------- Ideas y mejoras (formulario) ---------- */
+  .ideas { max-width: 640px; margin: 0 auto; }
+  .ideas form { display: grid; gap: 12px; margin-top: 18px; }
+  .ideas .types { display: flex; flex-wrap: wrap; gap: 8px; }
+  .ideas .types label { cursor: pointer; }
+  .ideas .types input { position: absolute; opacity: 0; pointer-events: none; }
+  .ideas .types span { display: inline-block; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--border); color: var(--dim); font-size: 14px; }
+  .ideas .types input:checked + span { color: var(--bg); background: var(--neon); border-color: var(--neon); font-weight: 700; }
+  .ideas .types input:focus-visible + span { outline: 2px solid var(--neon); outline-offset: 2px; }
+  .ideas textarea, .ideas input[type=email] { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; color: var(--text); font: inherit; padding: 12px 14px; }
+  .ideas textarea { min-height: 130px; resize: vertical; }
+  .ideas .hp { display: none; } /* campo trampa para bots */
+  .ideas .note { color: var(--mute); font-size: 13px; margin: 0; }
+  .ideas .msg { margin: 0; font-weight: 700; }
+  .ideas button.btn { border: 0; cursor: pointer; font: inherit; font-weight: 700; justify-self: start; }
+
   footer { border-top: 1px solid var(--border); padding: 28px 0 40px; color: var(--mute); font-size: 14px; }
   footer .wrap { display: flex; flex-wrap: wrap; gap: 14px 28px; justify-content: space-between; }
   footer a { color: var(--dim); }
@@ -138,6 +155,7 @@
     <nav>
       <a href="#funciones">Funciones</a>
       <a href="#pasaporte">Pasaporte</a>
+      <a href="#ideas">Ideas</a>
       <a href="privacidad.html">Privacidad</a>
       <a href="https://ko-fi.com/sernuu" rel="noopener">☕ Apoyar</a>
       <!-- "keep": este enlace se sigue viendo en el móvil -->
@@ -245,6 +263,25 @@
       <a class="btn ghost" href="https://ko-fi.com/sernuu" rel="noopener">☕ Invítame a un café</a>
     </div>
   </section>
+
+  <!-- Ideas y mejoras: te llega por correo (Web3Forms). Ver el script del final. -->
+  <section id="ideas" class="ideas">
+    <h2>¿Qué mejorarías?</h2>
+    <p class="sub">Cuéntame qué le falta a Rumbo, qué cambiarías o qué no funciona. Lo leo todo.</p>
+    <form id="ideas-form">
+      <div class="types" role="radiogroup" aria-label="Tipo de mensaje">
+        <label><input type="radio" name="tipo" value="Idea o mejora" checked><span>💡 Idea o mejora</span></label>
+        <label><input type="radio" name="tipo" value="Algo falla"><span>🐞 Algo falla</span></label>
+        <label><input type="radio" name="tipo" value="Otra cosa"><span>💬 Otra cosa</span></label>
+      </div>
+      <textarea name="mensaje" required minlength="5" maxlength="2000" placeholder="Me gustaría que Rumbo..." aria-label="Tu mensaje"></textarea>
+      <input type="email" name="email" placeholder="Tu correo (opcional, solo si quieres respuesta)" aria-label="Tu correo (opcional)">
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
+      <button class="btn primary" type="submit">Enviar</button>
+      <p class="msg" id="ideas-msg" role="status"></p>
+      <p class="note">Se envía a través de Web3Forms solo para que me llegue por correo. Más información en la <a href="privacidad.html">política de privacidad</a>.</p>
+    </form>
+  </section>
 </main>
 
 <footer>
@@ -258,5 +295,40 @@
   </div>
 </footer>
 
+<script>
+  // Formulario "¿Qué mejorarías?": manda el mensaje a Web3Forms, que te lo
+  // reenvía por correo. ACCESS_KEY es la clave de web3forms.com (la misma
+  // que FEEDBACK_KEY en src/config.js de la app). Si está vacía, se abre el
+  // correo del visitante con el mensaje ya escrito.
+  (function () {
+    var ACCESS_KEY = 'f0d367d0-ee5a-4fe3-b779-8d40c48a7355';
+    var EMAIL = 'sernudev@gmail.com';
+    var form = document.getElementById('ideas-form');
+    var msg = document.getElementById('ideas-msg');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var data = new FormData(form);
+      var texto = (data.get('mensaje') || '').trim();
+      var tipo = data.get('tipo');
+      var email = (data.get('email') || '').trim();
+      if (texto.length < 5) { msg.textContent = 'Escribe un poco más, por favor.'; return; }
+      if (!ACCESS_KEY) {
+        location.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent('Rumbo · ' + tipo) + '&body=' + encodeURIComponent(texto);
+        return;
+      }
+      var body = { access_key: ACCESS_KEY, subject: 'Rumbo · ' + tipo + ' (web)', from_name: 'Rumbo (web)', tipo: tipo, mensaje: texto, botcheck: form.botcheck.checked };
+      if (email) { body.email = email; body.replyto = email; }
+      msg.textContent = 'Enviando...';
+      fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(body) })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          if (!j.success) throw new Error();
+          form.reset();
+          msg.textContent = '¡Gracias! Mensaje enviado.';
+        })
+        .catch(function () { msg.textContent = 'No se ha podido enviar. Inténtalo otra vez en un rato.'; });
+    });
+  })();
+</script>
 </body>
 </html>
